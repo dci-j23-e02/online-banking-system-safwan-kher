@@ -17,6 +17,7 @@ public class BankingServiceImpl implements BankingService{
 
   @Override
   @Transactional
+  @Modifying
   public void openNewAccount(String accountType, double initialDeposit) {
 
     Account account = new Account();
