@@ -7,8 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -27,7 +28,7 @@ public class SecurityConfig  {
     http
         .authorizeHttpRequests(
             authorizeRequests -> authorizeRequests
-                .requestMatchers("/signup", "login").permitAll()
+                .requestMatchers("/signup", "/login").permitAll()
                 .anyRequest().authenticated()
         )
         .formLogin(
@@ -46,6 +47,14 @@ public class SecurityConfig  {
   @Bean
   public UserDetailsService userDetailsService(UserService userService){
     return  username -> userService.loadUserByUsername(username);
+//    return new UserDetailsService(){
+//
+//
+//      @Override
+//      public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        return new userService.loadUserByUsername(username);
+//      }
+//    };
   }
 
 }
