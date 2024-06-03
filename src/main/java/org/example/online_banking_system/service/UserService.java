@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface UserService  {
+public interface UserService extends  UserDetailsService {
   // save new user
   /**
    * @Description: save new user
@@ -17,6 +17,8 @@ public interface UserService  {
 
   // find user by username
   User findByUsername(String username);
+
+  boolean checkPassword(String rawPassword, String encodedPassword);
 
 
 
