@@ -1,7 +1,7 @@
 ### Assignment: Enhance the Online Banking System with Transaction Management
 
 #### Objective:
-Extend the functionality of an existing Online Banking System by incorporating advanced transaction management using `@Transactional` and `@Modifying` annotations. This involves creating services for opening new accounts, depositing money, withdrawing money, and transferring funds between accounts. Additionally, update the Thymeleaf templates to allow users to interact with these new functionalities using Bootstrap 5 for styling.
+Extend the functionality of an existing Online Banking System by incorporating advanced transaction management using `@Transactional` and `@Modifying` annotations. This involves creating services for opening new account, depositing money, withdrawing money, and transferring funds between account. Additionally, update the Thymeleaf templates to allow users to interact with these new functionalities using Bootstrap 5 for styling.
 
 #### Requirements:
 1. **Advanced Transaction Management:**
@@ -9,7 +9,7 @@ Extend the functionality of an existing Online Banking System by incorporating a
    - Use `@Modifying` for direct updates in the database for operations like deposits and withdrawals.
 
 2. **Service Layer Updates:**
-   - Develop methods that handle the creation of new accounts, deposits, withdrawals, and transfers, ensuring all operations are transactionally secure.
+   - Develop methods that handle the creation of new account, deposits, withdrawals, and transfers, ensuring all operations are transactionally secure.
 
 3. **Controller Enhancements:**
    - Introduce new endpoints in the controller to handle requests for each banking operation.
@@ -24,7 +24,7 @@ Extend the functionality of an existing Online Banking System by incorporating a
    - Create a method to open a new bank account.
    - Implement a method to deposit money into an account.
    - Develop a method for withdrawing money from an account.
-   - Set up a method to transfer money between two accounts.
+   - Set up a method to transfer money between two account.
 
 2. **Thymeleaf Template Implementation:**
    - Design forms for opening a new account, depositing money, withdrawing money, and transferring funds.
@@ -52,7 +52,7 @@ This template serves as the landing page and includes links to other functionali
     <h1>Welcome to the Online Banking System</h1>
     <div class="row">
         <div class="col-md-4">
-            <a th:href="@{/accounts/new}" class="btn btn-success">Open New Account</a>
+            <a th:href="@{/account/new}" class="btn btn-success">Open New Account</a>
         </div>
         <div class="col-md-4">
             <a th:href="@{/transactions/deposit}" class="btn btn-primary">Deposit Money</a>
@@ -84,7 +84,7 @@ This template includes a form for opening a new bank account.
 <body>
 <div class="container mt-4">
     <h1>Open a New Account</h1>
-    <form th:action="@{/accounts/new}" method="post" class="mt-3">
+    <form th:action="@{/account/new}" method="post" class="mt-3">
         <div class="mb-3">
             <label for="accountType" class="form-label">Account Type</label>
             <select id="accountType" name="accountType" class="form-control" required>
@@ -167,7 +167,7 @@ This template includes a form for withdrawing money from an account.
 
 ### 5. Transfer Form Template (transfer.html)
 
-This template includes a form for transferring money between two accounts.
+This template includes a form for transferring money between two account.
 
 ```html
 <!DOCTYPE html>
@@ -200,4 +200,4 @@ This template includes a form for transferring money between two accounts.
 </html>
 ```
 
-These templates provide a comprehensive user interface for the Online Banking System, allowing users to manage their accounts and perform various transactions efficiently. The use of Bootstrap 5 ensures that the interface is modern and responsive.
+These templates provide a comprehensive user interface for the Online Banking System, allowing users to manage their account and perform various transactions efficiently. The use of Bootstrap 5 ensures that the interface is modern and responsive.

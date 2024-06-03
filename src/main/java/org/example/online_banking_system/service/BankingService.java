@@ -2,7 +2,10 @@ package org.example.online_banking_system.service;
 
 public interface BankingService {
   /**
-   * Algo..
+   * A method to open new accounts
+   * @param accountType : String value : Checking or Saving
+   * @param initialDeposit : the initial balance
+   * return no specific value : void
    * */
   void openNewAccount(String accountType, double initialDeposit);
   void depositMoney(String accountNumber, double amount);
