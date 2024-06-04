@@ -1,17 +1,28 @@
 package org.example.online_banking_system.service;
 
 
+
 import org.example.online_banking_system.model.User;
+
 import org.example.online_banking_system.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.core.userdetails.UserDetails;
+
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.stereotype.Service;
+
+
 
 @Service
 
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserDetailsService {
 
 
 
@@ -27,17 +38,16 @@ public class UserServiceImpl implements UserService {
 
 
 
-  @Override
   public void saveUser(String username, String password) {
 
     User user = new User(username, passwordEncoder.encode(password));
+
     userRepository.save(user);
 
   }
 
 
 
-  @Override
   public User findByUsername(String username) {
 
     return userRepository.findUserByUsername(username);
@@ -46,7 +56,6 @@ public class UserServiceImpl implements UserService {
 
 
 
-  @Override
   public boolean checkPassword(String rawPassword, String encodedPassword) {
 
     return passwordEncoder.matches(rawPassword, encodedPassword);
@@ -62,6 +71,8 @@ public class UserServiceImpl implements UserService {
     User user = findByUsername(username);
 
     if (user == null) {
+
+      System.out.println("Null user");
 
       throw new UsernameNotFoundException("User not found");
 

@@ -1,14 +1,26 @@
 package org.example.online_banking_system.config;
-// Package imports
 
-import org.example.online_banking_system.service.UserService;
+
+
+import org.example.online_banking_system.service.UserServiceImpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+
 import org.springframework.context.annotation.Configuration;
+
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+
 
 @Configuration
 
@@ -20,9 +32,9 @@ public class SecurityConfig {
 
   @Bean
 
-  public BCryptPasswordEncoder passwordEncoder() {
+  public UserDetailsService userDetailsService(UserServiceImpl userService) {
 
-    return new BCryptPasswordEncoder();
+    return userService;
 
   }
 
@@ -34,33 +46,31 @@ public class SecurityConfig {
 
     http
 
-        .authorizeHttpRequests(authorizeRequests ->
+        .authorizeHttpRequests(authorizeRequests -> authorizeRequests
 
-            authorizeRequests
+            .requestMatchers("/signup", "/login").permitAll()
 
-                .requestMatchers("/signup", "/login", "/").permitAll()
-
-                .anyRequest().authenticated()
+            .anyRequest().authenticated()
 
         )
 
-        .formLogin(formLogin ->
+        .formLogin(formLogin -> formLogin
 
-            formLogin
+            .loginPage("/login")
 
-                .loginPage("/login")
+            .defaultSuccessUrl("/", true)
 
-                .defaultSuccessUrl("/", true)
-
-                .permitAll()
+            .permitAll()
 
         )
 
-        .logout(logout ->
+        .logout(logout -> logout
 
-            logout
+            .logoutUrl("/logout")
 
-                .permitAll()
+            .logoutSuccessUrl("/login?logout")
+
+            .permitAll()
 
         );
 
@@ -72,11 +82,11 @@ public class SecurityConfig {
 
 
 
-  @Bean
+  @Autowired
 
-  public UserDetailsService userDetailsService(UserService userService) {
+  public void configureGlobal(AuthenticationManagerBuilder auth, UserDetailsService userDetailsService) throws Exception {
 
-    return username -> userService.loadUserByUsername(username);
+    auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
 
   }
 
