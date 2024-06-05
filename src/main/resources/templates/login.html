@@ -16,6 +16,10 @@
   <div th:if="${param.error}" class="alert alert-danger" role="alert">
     <span th:text="${errorMessage}">Test</span>
   </div>
+    <!-- Logout Alert -->
+  <div th:if="${param.logout}" id="logoutAlert" class="alert alert-info" role="alert">
+    Logged out successfully!
+  </div>
   <form th:action="@{/login}" method="post" class="mt-3">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <div class="mb-3">
@@ -32,5 +36,27 @@
     <p>Don't have an account? <a th:href="@{/signup}">Sign up here</a></p>
   </div>
 </div>
+
+<!-- JavaScript to hide the logout alert after 10 seconds -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var alerts = document.getElementsByClassName("alert");
+
+    if (alerts[0]) {
+      setTimeout(function() {
+        alerts[0].style.display = "none";
+      }, 5000); // 5 seconds
+    }else if (alerts[1]){
+      setTimeout(function() {
+        alerts[1].style.display = "none";
+      }, 5000); // 5 seconds
+    }else if (alerts[2]){
+      setTimeout(function() {
+        alerts[2].style.display = "none";
+      }, 5000); // 5 seconds
+    }
+  });
+</script>
+
 </body>
 </html>

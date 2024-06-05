@@ -2,7 +2,7 @@ package org.example.online_banking_system.controller;
 
 
 
-import jakarta.servlet.http.HttpServletRequest;
+
 import org.example.online_banking_system.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,18 +18,6 @@ public class UserController {
 
   @Autowired
   private UserServiceImpl userService;
-
-
-
-  @GetMapping("/login")
-  public String showLoginForm(Model model) {
-
-    String errorMessage = "Invalid credentials";
-    model.addAttribute("errorMessage", errorMessage);
-    return "login";
-  }
-
-
 
   @GetMapping("/signup")
 
@@ -51,11 +39,16 @@ public class UserController {
 
   }
 
-  @GetMapping("/login?logout")
-  public String logoutSuccess(Model model){
-    String errorMessage = "You have been logged out successfully.";
-    model.addAttribute("errorMessage", errorMessage);
-    return "login";
+  @GetMapping("/login")
+  public String login(Model model) {
+    model.addAttribute("errorMessage", "Invalid Credentials !!");
+    return "login"; // Return the login view
+  }
+
+  @GetMapping("/logout")
+  public String logout() {
+
+    return "redirect:/login?logout"; // Redirect to login page with logout parameter
   }
 
 }
