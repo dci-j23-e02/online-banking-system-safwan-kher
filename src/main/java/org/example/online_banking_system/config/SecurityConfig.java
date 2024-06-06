@@ -61,7 +61,6 @@ public class SecurityConfig {
 
 
   @Autowired
-
   public void configureGlobal(
       AuthenticationManagerBuilder auth,
       UserDetailsService userDetailsService

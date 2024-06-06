@@ -2,7 +2,10 @@ package org.example.online_banking_system.service;
 
 
 
+import java.util.List;
+import org.example.online_banking_system.model.Account;
 import org.example.online_banking_system.model.User;
+import org.example.online_banking_system.repository.AccountRepository;
 import org.example.online_banking_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +23,8 @@ public class UserServiceImpl implements UserDetailsService {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private AccountRepository accountRepository;
 
   @Autowired
   private BCryptPasswordEncoder passwordEncoder;
@@ -44,6 +49,15 @@ public class UserServiceImpl implements UserDetailsService {
   }
 
 
+  // extra service to save user with accounts
+  public void saveUserWithAccounts(String userName, String password, List<Account> accounts) {
+    User user = new User(userName,passwordEncoder.encode(password));
+    for (Account a: accounts) {
+      a.setUser(user);
+    }
+    user.setAccounts(accounts);
+    userRepository.save(user);
+  }
 
   @Override
 

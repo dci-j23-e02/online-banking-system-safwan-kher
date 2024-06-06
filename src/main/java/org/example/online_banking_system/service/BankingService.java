@@ -7,7 +7,7 @@ public interface BankingService {
    * @param initialDeposit : the initial balance
    * return no specific value : void
    * */
-  void openNewAccount(String accountType, double initialDeposit);
+  void openNewAccount(String accountType, double initialDeposit, Long userId);
   void depositMoney(String accountNumber, double amount);
   void withdrawMoney(String accountNumber, double amount);
   void transferMoney(String fromAccount, String toAccount, double amount);
