@@ -11,20 +11,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class BankingServiceImpl implements BankingService{
-
+public class BankingServiceImpl implements BankingService {
   @Autowired
   private AccountRepository accountRepository;
 
   @Autowired
   private UserRepository userRepository;
 
-
   @Override
   @Transactional
   @Modifying
   public void openNewAccount(String accountType, double initialDeposit, Long userId) {
-    User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User Not Found"));
+    User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
     Account account = new Account();
     account.setAccountNumber(AccountNumberGenerator.generateAccountNumber());
     account.setAccountType(accountType);
@@ -38,28 +36,25 @@ public class BankingServiceImpl implements BankingService{
   @Modifying
   public void depositMoney(String accountNumber, double amount) {
     Account account = accountRepository.findByAccountNumber(accountNumber);
-    if(account != null){
+    if (account != null) {
       account.setBalance(account.getBalance() + amount);
       accountRepository.save(account);
-    }else{
+    } else {
       throw new RuntimeException("Account not exist");
     }
-    // Handle the case when the account number does not exist
   }
 
   @Override
   @Transactional
   @Modifying
   public void withdrawMoney(String accountNumber, double amount) {
-
     Account account = accountRepository.findByAccountNumber(accountNumber);
-    if(account != null && account.getBalance() >= amount){
+    if (account != null && account.getBalance() >= amount) {
       account.setBalance(account.getBalance() - amount);
       accountRepository.save(account);
-    }else{
+    } else {
       throw new RuntimeException("Account not exist or insufficient funds for withdrawal");
     }
-
   }
 
   @Override
