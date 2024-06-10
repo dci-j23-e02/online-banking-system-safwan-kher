@@ -29,36 +29,31 @@ public class AccountController {
 
   @GetMapping("/openAccount")
   public String showOpenAccountForm() {
+
     return "openAccount";
   }
 
   @PostMapping("/openAccount")
-  public String openNewAccount(@RequestParam String accountType, @RequestParam double initialDeposit, @AuthenticationPrincipal UserDetails userDetails, Model model) {
+  public String openNewAccount(
+      @RequestParam String accountType,
+      @RequestParam double initialDeposit,
+      @AuthenticationPrincipal UserDetails userDetails,
+      Model model) {
     User user = userService.findByUsername(userDetails.getUsername());
     bankingService.openNewAccount(accountType, initialDeposit, user.getId());
     model.addAttribute("message", "Account successfully created!");
-    return "accountSuccess";
+    return "redirect:/accountSuccess";
   }
 
-  @GetMapping("/accounts/new")
-  public String showNewAccountForm() {
-    return "openAccount";
-  }
-
-  @PostMapping("/accounts/new")
-  public String openNewAccountForm(@RequestParam String accountType, @RequestParam double initialDeposit, @AuthenticationPrincipal UserDetails userDetails, Model model) {
-    User user = userService.findByUsername(userDetails.getUsername());
-    bankingService.openNewAccount(accountType, initialDeposit, user.getId());
-    model.addAttribute("message", "Account successfully created!");
-    return "accountSuccess";
-  }
-  @GetMapping("/transactions/deposit")
+   @GetMapping("/transactions/deposit")
   public String showDepositForm() {
     return "deposit";
   }
 
   @PostMapping("/transactions/deposit")
-  public String depositMoney(@RequestParam String accountNumber, @RequestParam double amount) {
+  public String depositMoney(
+      @RequestParam String accountNumber,
+      @RequestParam double amount) {
     bankingService.depositMoney(accountNumber, amount);
     return "redirect:/";
   }
