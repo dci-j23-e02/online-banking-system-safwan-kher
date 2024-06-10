@@ -45,6 +45,11 @@ public class AccountController {
     return "redirect:/accountSuccess";
   }
 
+  @GetMapping("/accountSuccess")
+   public String showAccountSuccess() {
+    return "accountSuccess";
+  }
+
    @GetMapping("/transactions/deposit")
   public String showDepositForm() {
     return "deposit";
